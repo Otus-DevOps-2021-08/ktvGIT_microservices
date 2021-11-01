@@ -1,0 +1,93 @@
+[
+    {
+        "Id": "sha256:cf081bba88eef75f3f357166239fbf591ab4766a15c93c8e0fd0f1f5098fe3b3",
+        "RepoTags": [
+            "ktv2020/otus-reddit:1.0",
+            "reddit:latest"
+        ],
+        "RepoDigests": [
+            "ktv2020/otus-reddit@sha256:79f5888edc32084ed47371a5009af33fde019854c91a33a025c3105fe6b7ed6f"
+        ],
+        "Parent": "sha256:711cf47fc63149127ab5f26cec87307f0cd10d51d9983f771be5970027e2a235",
+        "Comment": "",
+        "Created": "2021-10-31T01:20:36.126125965Z",
+        "Container": "d15d509e70e9086b6b145642e012f2f8295630bbfaa207f5281f12eafdc9fe2f",
+        "ContainerConfig": {
+            "Hostname": "d15d509e70e9",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"/start.sh\"]"
+            ],
+            "Image": "sha256:711cf47fc63149127ab5f26cec87307f0cd10d51d9983f771be5970027e2a235",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "DockerVersion": "20.10.10",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/start.sh"
+            ],
+            "Image": "sha256:711cf47fc63149127ab5f26cec87307f0cd10d51d9983f771be5970027e2a235",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": null
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 695794551,
+        "VirtualSize": 695794551,
+        "GraphDriver": {
+            "Data": null,
+            "Name": "aufs"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:be96a3f634de79f523f07c7e4e0216c28af45eb5776e7a6238a2392f71e01069",
+                "sha256:df54c846128da3c71cc11b2150a3df39ec86fb170e299765daf6bb016a0705c2",
+                "sha256:47ef83afae74745639f6738a05fe5320fcfca9e6c7765fba4f25e270bc0df9dc",
+                "sha256:1251204ef8fc20da275e09f6e3ab9205421d4ff34732f2d50a1d3e86d2995edd",
+                "sha256:5a72397f9bb44d73f7970132af45999fd45c6916dcf3047c6f9b98e4ca9221cc",
+                "sha256:4b7dffa8d7544b1114b3d6267fa41c723f722fe7b3e365f19a4f05c91b2462b5",
+                "sha256:a4accb56d453b3e4e38435a8d7974cdf9e3f3f3239d9ab122edd2de7b1faa6d2",
+                "sha256:a20c40a7bd072e06357551ed42aff1c908ebf885d7882521755d93f4cfbfef76",
+                "sha256:b1f5eace77444fa28569a1b4261bbe37b3823b192929efc66b45ae9d5be8445f",
+                "sha256:6c4558b023ae8ec6e700e012f7c83750d681e07da0e9d2ba14acee2e9ade6630"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2021-10-31T01:45:15.707352274Z"
+        }
+    }
+]

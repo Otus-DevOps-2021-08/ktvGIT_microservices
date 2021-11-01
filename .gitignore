@@ -1,0 +1,25 @@
+variables.json
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+.terraform/
+*.retry
+.vscode
+ansible/reddit_app2.yml
+ansible/inventory_dinamic.json.bak2
+ansible/inventory_dinamic.json.bak1
+packer/validate.pwi
+packer/validate.hwm
+packer/validate.pwd
+jdauphant.nginx
+vault.key
+inventory.bak1
+inventory.bak2
+# Vagrant & molecule
+.vagrant/
+*.log
+*.pyc
+.molecule
+.cache
+.pytest_cache
