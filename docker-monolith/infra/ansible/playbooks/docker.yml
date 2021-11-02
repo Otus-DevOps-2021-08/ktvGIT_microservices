@@ -1,0 +1,47 @@
+---
+- name: Install docker
+  hosts: all
+  become: true
+  tags: install
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - python3-pip
+          - apt-transport-https
+          - ca-certificates
+          - gnupg-agent
+          - software-properties-common
+          - mc
+        state: present
+
+    - name: Add apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add apt repository and update cache
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu xenial stable
+        state: present
+        update_cache: true
+
+    - name: Install docker
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Check docker service
+      systemd:
+        name: docker
+        enabled: true
+        state: started
+
+    - name: Install python docker module
+      pip:
+        name: docker
+        state: present

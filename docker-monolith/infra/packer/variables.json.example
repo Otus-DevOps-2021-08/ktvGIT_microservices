@@ -1,0 +1,6 @@
+{
+    "service_account_key_file": "./packer/key.json",
+    "source_image_family": "source_image_family",
+    "folder_id": "folder_id",
+    "subnet_id": "subnet_id"
+}
