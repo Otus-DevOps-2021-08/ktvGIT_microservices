@@ -21,3 +21,12 @@ ktvGIT microservices repository
 Оптимизирована  работа с Docker-образами (*)
 Изучен запуск с различными прраметрами -v  -е --env  (*) run_all.sh
 Запуск и работа приложения на основе Docker-образов, оценка удобства запуска контейнеров при помощи
+
+Правильный requirements.txt
+prometheus_client==0.0.21
+# flask==0.12.3
+pymongo==3.5.1
+structlog==17.2.0
+# py-zipkin==0.13.0 Отключить в версии Dockerfile
+py-zipkin==0.13.0
+requests==2.18.4
