@@ -23,3 +23,4 @@ inventory.bak2
 .molecule
 .cache
 .pytest_cache
+src/.env
