@@ -7,7 +7,7 @@ variables:
  DATABASE_URL: 'mongodb://mongo/user_posts'
 before_script:
 - cd reddit
-- gem install bundler
+- apt-get update && apt-get install -y mongodb-server ruby-full ruby-dev build-essential git && gem install bundler
 
 build_job:
   stage: build
