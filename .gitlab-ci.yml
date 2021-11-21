@@ -34,8 +34,3 @@ deploy_dev_job:
     name: dev
     url: http://dev.example.com
 
-
-deploy_job:
-  stage: deploy
-  script:
-    - echo 'Deploy'
