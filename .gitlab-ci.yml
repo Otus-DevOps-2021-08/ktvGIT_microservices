@@ -7,19 +7,13 @@ variables:
  DATABASE_URL: 'mongodb://mongo/user_posts'
 before_script:
 - cd reddit
-- apt-get update && apt-get install -y mongodb-server ruby-full ruby-dev build-essential git && gem install bundler
+- gem install bundler
 
 build_job:
   stage: build
   script:
     - echo 'Building'
 
-test_unit_job:
- stage: test
- services:
- - mongo:latest
- script:
- - ruby simpletest.rb
 
 test_integration_job:
   stage: test
