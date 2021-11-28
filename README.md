@@ -90,7 +90,12 @@ docker-compose up -d -p <NAME Specify>
 Подготовить репозиторий с кодом приложения
 Описать для приложения этапы пайплайна
 Определить окружения
-*  Ansible-плейбук (или небольшую роль) по поднятию GitLab в контейнере.
+* Ansible-плейбук (или небольшую роль) по поднятию GitLab в контейнере.
 * Запуск reddit в контейнере (по желанию)
 * Автоматизация развёртывания GitLab Runner (по желанию)
 * Настройка оповещений в Slack (по желанию)
+# в Project, который мы создали, в Settings -> Integrations -> Slack notifications добавляем Webhook
+# из предварительно добавленного в нужный канал Slack приложения Incoming WebHooks
+http://51.250.11.17/help/user/project/integrations/slack
+Slack notifications service (FREE)
+The Slack notifications service enables your GitLab project to send events
