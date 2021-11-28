@@ -51,7 +51,7 @@ deploy_dev_job:
 
 .branch_review_job: &branch_review_template
   stage: review
-  image: docker:19.03.8
+  image: docker:stable
   variables:
     DOCKER_TLS_VERIFY: '1'
     DOCKER_HOST: 'tcp://$CI_SERVER_HOST:2376'
@@ -67,7 +67,7 @@ deploy_dev_job:
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
     # - apk add py3-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - apk add py-pip
+    # - apk add py-pip
     - pip install docker-compose
     - docker-compose --version
     - docker ps -as
