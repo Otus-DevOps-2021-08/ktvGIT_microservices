@@ -66,7 +66,8 @@ deploy_dev_job:
     - echo "DOCKER_HOST=$DOCKER_HOST"
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
-    - apk add py3-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    # - apk add py3-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - apk add py-pip
     - pip install docker-compose
     - docker-compose --version
     - docker ps -as
