@@ -31,7 +31,7 @@ test_unit_job:
     DATABASE_URL: 'mongo:27017'
   before_script:
     - cd reddit
-    - bundle install
+    - gem bundle install
   script:
     - echo 'Testing 1'
     - ruby simpletest.rb
