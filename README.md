@@ -94,8 +94,16 @@ docker-compose up -d -p <NAME Specify>
 * Запуск reddit в контейнере (по желанию)
 * Автоматизация развёртывания GitLab Runner (по желанию)
 * Настройка оповещений в Slack (по желанию)
-# в Project, который мы создали, в Settings -> Integrations -> Slack notifications добавляем Webhook
-# из предварительно добавленного в нужный канал Slack приложения Incoming WebHooks
+
+ в Project, который мы создали, в Settings -> Integrations -> Slack notifications добавляем Webhook
+ из предварительно добавленного в нужный канал Slack приложения Incoming WebHooks
+
 http://51.250.11.17/help/user/project/integrations/slack
 Slack notifications service (FREE)
 The Slack notifications service enables your GitLab project to send events
+
+https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
+Use Docker to build Docker images
+
+https://hub.docker.com/_/docker/
+docker Official Image
