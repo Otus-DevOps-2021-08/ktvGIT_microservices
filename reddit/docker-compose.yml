@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo:/data/db
+    networks:
+      - ntwrk
+
+  app:
+    image: ${DOCKER_HUB_LOGIN:-user}/otus-reddit:${CI_COMMIT_TAG:-1.0.0}.${CI_COMMIT_SHORT_SHA:-0}
+    ports:
+      - ${APP_PUBLISHED_PORT:-9292}:9292/tcp
+    networks:
+      - ntwrk
+    depends_on:
+      - mongo
+
+volumes:
+  mongo:
+
+networks:
+  ntwrk:

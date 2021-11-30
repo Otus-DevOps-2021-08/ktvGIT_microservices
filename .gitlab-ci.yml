@@ -1,0 +1,128 @@
+stages:
+  - build
+  - test
+  - review
+  - stage
+  - production
+
+build_job:
+  stage: build
+  image: docker:19.03.8
+  services:
+    - docker:19.03.8-dind
+  before_script:
+    - docker info
+    - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
+    - docker image ls
+  script:
+    - echo 'Building'
+    - docker build -t ${DOCKER_HUB_LOGIN:-user}/otus-reddit:${CI_COMMIT_TAG:-1.0.0}.${CI_COMMIT_SHORT_SHA:-0} ./reddit
+    - docker push ${DOCKER_HUB_LOGIN:-user}/otus-reddit:${CI_COMMIT_TAG:-1.0.0}.${CI_COMMIT_SHORT_SHA:-0}
+  after_script:
+    - docker image ls
+
+test_unit_job:
+  stage: test
+  # image: ruby:2.4.2
+  services:
+    - mongo:latest
+  variables:
+  #  DATABASE_URL: 'mongodb://mongo/user_posts'
+    DATABASE_URL: 'mongo:27017'
+  before_script:
+    - cd reddit
+    - bundle install
+  script:
+    - echo 'Testing 1'
+    - ruby simpletest.rb
+
+test_integration_job:
+  stage: test
+  script:
+    - echo 'Testing 2'
+
+deploy_dev_job:
+  stage: review
+  script:
+    - echo 'Deploy on dev'
+  environment:
+    name: dev
+    url: http://dev.example.com
+
+.branch_review_job: &branch_review_template
+  stage: review
+  image: docker:stable
+  variables:
+    DOCKER_TLS_VERIFY: '1'
+    DOCKER_HOST: 'tcp://$CI_SERVER_HOST:2376'
+    DOCKER_CERT_PATH: '/tmp/$CI_COMMIT_REF_NAME'
+  before_script:
+    - mkdir -p $DOCKER_CERT_PATH
+    - cp -f $DOCKER_HOST_CA_FILE $DOCKER_CERT_PATH/ca.pem
+    - cp -f $DOCKER_HOST_CERT_FILE $DOCKER_CERT_PATH/cert.pem
+    - cp -f $DOCKER_HOST_KEY_FILE $DOCKER_CERT_PATH/key.pem
+    - echo "DOCKER_CERT_PATH=$DOCKER_CERT_PATH"
+    - ls -a $DOCKER_CERT_PATH
+    - echo "DOCKER_HOST=$DOCKER_HOST"
+    - docker info
+    - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
+    # - apk add py3-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - apk add py-pip python3-dev libffi-dev openssl-dev gcc libc-dev rust cargo make
+    # - apk add --no-cache python3 py3-pip
+    - pip install docker-compose
+    - docker-compose --version
+    - docker ps -as
+    - docker image ls
+    - docker-compose -f ./reddit/docker-compose.yml config
+  after_script:
+    - docker ps -as
+    - docker image ls
+  only:
+    - branches
+  except:
+    - master
+
+branch_review:
+  <<: *branch_review_template
+  script:
+    - echo "Deploy on branch/$CI_COMMIT_REF_NAME environment"
+    - docker-compose -f ./reddit/docker-compose.yml up -d
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    url: http://$CI_SERVER_HOST:9292
+    on_stop: stop_branch_review
+    auto_stop_in: 3 days
+
+stop_branch_review:
+  <<: *branch_review_template
+  when: manual
+  script:
+    - echo 'Remove branch review app'
+    - docker-compose -f ./reddit/docker-compose.yml down
+    - docker image rm -f $(docker image ls -q ${DOCKER_HUB_LOGIN:-user}/otus-reddit) || echo
+    - docker image rm -f $(docker image ls -q --filter 'dangling=true') || echo
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    action: stop
+
+staging:
+  stage: stage
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy on stage'
+  environment:
+    name: stage
+    url: https://beta.example.com
+
+production:
+  stage: production
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy on production'
+  environment:
+    name: production
+    url: https://example.com
