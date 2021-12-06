@@ -24,3 +24,4 @@ inventory.bak2
 .cache
 .pytest_cache
 src/.env
+docker/.env
