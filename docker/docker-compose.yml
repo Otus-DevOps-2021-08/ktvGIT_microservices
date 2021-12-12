@@ -1,69 +1,72 @@
 version: '3.3'
+
 services:
-  post_db:
-    image: mongo:3.2
+  mongo_db:
+    image: mongo:${MONGO_VERSION:-3.2}
     volumes:
-      - post_db:/data/db
+      - mongo_db:/data/db
     networks:
-      - back-network
+      back_net:
+        aliases:
+          - post_db
+          - comment_db
+
   ui:
-    build: ./ui
-    image: ${USERNAME}/${UI_VERSION}
+    image: ${USER_NAME:-user}/ui:${APP_TAG:-latest}
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED:-false}
     ports:
-      - ${UI_PORT}
+      - ${UI_PUBLISHED_PORT:-9292}:9292/tcp
     networks:
-      - front-network
+      - front_net
+    depends_on:
+      - post
+      - comment
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:${FLUENTD_PUBLISHED_PORT:-24224}
+        tag: service.ui
+
   post:
-    build: ./post-py
-    image: ${USERNAME}/post:${POST_VERSION}
+    image: ${USER_NAME:-user}/post:${APP_TAG:-latest}
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED:-false}
     networks:
-      - back-network
-      - front-network
+      - back_net
+      - front_net
+    depends_on:
+      - mongo_db
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:${FLUENTD_PUBLISHED_PORT:-24224}
+        tag: service.post
+
   comment:
-    build: ./comment
-    image: ${USERNAME}/comment:${COMMENT_VERSION}
+    image: ${USER_NAME:-user}/comment:${APP_TAG:-latest}
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED:-false}
     networks:
-      - back-network
-      - front-network
-  prometheus:
-    image: ${USERNAME}/prometheus
-    ports:
-      - '9090:9090'
-    volumes:
-      - prometheus_data:/prometheus
-    command: # Передаем доп параметры в командной строке
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention=1d' # Задаем время хранения метрик в 1 день
-    networks:
-      - back-network
-      - front-network
-  node-exporter:
-    image: prom/node-exporter:v1.1.2
-    user: root
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-    networks:
-      - back-network
-      - front-network
+      - back_net
+      - front_net
+    depends_on:
+      - mongo_db
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:${FLUENTD_PUBLISHED_PORT:-24224}
+        tag: service.comment
+
 volumes:
-  post_db:
-  prometheus_data:
+  mongo_db:
 
 networks:
-  back-network:
-    driver: bridge
+  back_net:
     ipam:
       config:
-        - subnet: 10.0.2.0/24
-  front-network:
-    driver: bridge
+        - subnet: ${BACK_SUBNET:-10.0.2.0/24}
+  front_net:
     ipam:
       config:
-        - subnet: 10.0.1.0/24
+        - subnet: ${FRONT_SUBNET:-10.0.1.0/24}
