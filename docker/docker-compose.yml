@@ -1,74 +1,42 @@
 version: '3.3'
-
 services:
-  mongo_db:
-    image: mongo:${MONGO_VERSION:-3.2}
+  post_db:
+    image: mongo:3.2
     volumes:
-      - mongo_db:/data/db
+      - post_db:/data/db
     networks:
-      back_net:
-        aliases:
-          - post_db
-          - comment_db
-
+      - back-network
   ui:
-    image: ${USER_NAME:-user}/ui:${APP_TAG:-latest}
-    environment:
-      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED:-false}
+    build: ./ui
+    image: ${USERNAME}/${UI_VERSION}
     ports:
-      - ${UI_PUBLISHED_PORT:-9292}:9292/tcp
+      - ${UI_PORT}
     networks:
-      - front_net
-    depends_on:
-      - post
-      - comment
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:${FLUENTD_PUBLISHED_PORT:-24224}
-        tag: service.ui
-
+      - front-network
   post:
-    image: ${USER_NAME:-user}/post:${APP_TAG:-latest}
-    environment:
-      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED:-false}
+    build: ./post-py
+    image: ${USERNAME}/post:2.0
     networks:
-      - back_net
-      - front_net
-    depends_on:
-      - mongo_db
-    ports:
-      - 5000:5000/tcp
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:${FLUENTD_PUBLISHED_PORT:-24224}
-        tag: service.post
-
+      - back-network
+      - front-network
   comment:
-    image: ${USER_NAME:-user}/comment:${APP_TAG:-latest}
-    environment:
-      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED:-false}
+    build: ./comment
+    image: ${USERNAME}/comment:1.0
     networks:
-      - back_net
-      - front_net
-    depends_on:
-      - mongo_db
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:${FLUENTD_PUBLISHED_PORT:-24224}
-        tag: service.comment
+      - back-network
+      - front-network
 
 volumes:
-  mongo_db:
+  post_db:
 
 networks:
-  back_net:
+  back-network:
+    driver: bridge
     ipam:
       config:
-        - subnet: ${BACK_SUBNET:-10.0.2.0/24}
-  front_net:
+        - subnet: 10.0.2.0/24
+  front-network:
+    driver: bridge
     ipam:
       config:
-        - subnet: ${FRONT_SUBNET:-10.0.1.0/24}
+        - subnet: 10.0.1.0/2
