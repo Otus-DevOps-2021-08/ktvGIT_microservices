@@ -38,7 +38,7 @@ services:
     depends_on:
       - mongo_db
     ports:
-      - "5000:5000"
+      - 5000:5000/tcp
     logging:
       driver: fluentd
       options:
