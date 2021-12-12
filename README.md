@@ -107,3 +107,11 @@ Use Docker to build Docker images
 
 https://hub.docker.com/_/docker/
 docker Official Image
+
+## monitoring-1
+
+Prometheus: запуск, конфигурация, знакомство с Web UI
+Мониторинг состояния микросервисов
+Сбор метрик хоста с использованием экспортера
+
+https://hub.docker.com/u/ktv2020
