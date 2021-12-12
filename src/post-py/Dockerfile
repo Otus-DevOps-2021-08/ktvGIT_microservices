@@ -1,9 +1,10 @@
 FROM python:3.6.0-alpine
 
 WORKDIR /app
-COPY . /app
+ADD . /app
 
 RUN apk --no-cache --update add build-base && \
+    pip install --upgrade pip && \
     pip install -r /app/requirements.txt && \
     apk del build-base
 
