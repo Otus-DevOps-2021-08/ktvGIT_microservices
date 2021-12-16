@@ -1,8 +1,9 @@
-FROM ruby:2.2-alpine
+FROM ruby:2.6.0-alpine
+
 WORKDIR /app
 COPY . ./
 
-RUN apk --no-cache --update add build-base=0.4-r1 && \
+RUN apk --no-cache --update add build-base=0.5-r1 && \
     bundle install && \
     apk del build-base
 

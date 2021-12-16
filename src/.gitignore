@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+*log
+=======
+docker-compose.yml
 build_info.txt
 prometheus/
 
 ## python specific
 *.pyc
+>>>>>>> 11c4d0d846bf2d62bfcc9576c2432f67c17526cf
