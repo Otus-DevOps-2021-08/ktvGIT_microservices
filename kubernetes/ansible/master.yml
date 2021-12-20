@@ -1,0 +1,79 @@
+- hosts: master
+  become: yes
+  tasks:
+    - name: initialize the cluster
+      # shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+      shell: kubeadm init --apiserver-cert-extra-sans={{ansible_host}} --apiserver-advertise-address=0.0.0.0 --control-plane-endpoint={{ansible_host}} --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+      args:
+        chdir: $HOME
+        creates: cluster_initialized.txt
+
+    # - name: create .kube directory
+    #   become: yes
+    #   become_user: ubuntu
+    #   file:
+    #     path: $HOME/.kube
+    #     state: directory
+    #     mode: 0755
+
+    # - name: copy admin.conf to user's kube config
+    #   copy:
+    #     src: /etc/kubernetes/admin.conf
+    #     dest: /home/ubuntu/.kube/config
+    #     remote_src: yes
+    #     owner: ubuntu
+
+    # - name: install Pod network
+    #   become: yes
+    #   become_user: ubuntu
+    #   shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml >> pod_network_setup.txt
+    #   args:
+    #     chdir: $HOME
+    #     creates: pod_network_setup.txt
+
+    - name: create .kube directory
+      become: yes
+      become_user: yc-user
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: 0755
+
+    - name: copy admin.conf to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/yc-user/.kube/config
+        remote_src: yes
+        owner: yc-user
+
+    - name: Download calico.yaml
+      become: yes
+      become_user: yc-user
+      get_url:
+        url: https://docs.projectcalico.org/manifests/calico.yaml
+        dest: $HOME/calico.yaml
+        mode: "0440"
+
+    - name: CALICO_IPV4POOL_CIDR
+      become: yes
+      become_user: yc-user
+      replace:
+        path: $HOME/calico.yaml
+        regexp: "([ ]*)(# )(-.*(CALICO_IPV4POOL_CIDR))"
+        replace: '\1\3\n\1  value: "10.244.0.0/16"'
+
+    - name: install Pod network
+      become: yes
+      become_user: yc-user
+      shell: kubectl apply -f $HOME/calico.yaml >> pod_network_setup.txt
+      args:
+        chdir: $HOME
+        creates: pod_network_setup.txt
+
+    - name: get join command
+      shell: kubeadm token create --print-join-command
+      register: join_command_raw
+
+    - name: set join command
+      set_fact:
+        join_command: "{{ join_command_raw.stdout }}"

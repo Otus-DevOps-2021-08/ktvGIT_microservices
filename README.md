@@ -127,3 +127,6 @@ https://hub.docker.com/u/ktv2020
 * Разбор ещё одного формата логов (по желанию)
 Траблшутинг UI-экспириенса (по желанию)
 Failed to open TCP connection to post:5000 (getaddrinfo: Temporary failure in name resolution)
+
+
+## kubernetes-1
