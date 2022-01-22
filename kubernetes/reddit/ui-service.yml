@@ -10,9 +10,9 @@ spec:
   type: NodePort
   ports:
   - nodePort: 32092
-  - port: 9292
-      protocol: TCP
-      targetPort: 9292
-    selector:
-      app: reddit
-      component: ui
+    port: 9292
+    protocol: TCP
+    targetPort: 9292
+  selector:
+    app: reddit
+    component: ui
