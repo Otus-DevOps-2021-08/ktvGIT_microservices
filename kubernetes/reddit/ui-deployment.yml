@@ -6,7 +6,7 @@ metadata:
   name: ui
   labels:
     app: reddit
-    component: ui
+    component: ui-22222
 spec:
   replicas: 3
   selector:
