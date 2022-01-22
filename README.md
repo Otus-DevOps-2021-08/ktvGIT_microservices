@@ -135,3 +135,4 @@ Failed to open TCP connection to post:5000 (getaddrinfo: Temporary failure in na
 Развернут Kubernetes в Yandex Cloud
 Запустить reddit в Kubernetes
 * Развернут Kubernetes-кластер в GKE с помощью Terraform модуля
+-Добавлено для презапуска аввтотеста
