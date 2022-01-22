@@ -1,8 +1,9 @@
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: comment-deployment
+  name: comment
   labels:
     app: reddit
     component: comment
@@ -20,7 +21,7 @@ spec:
         component: comment
     spec:
       containers:
-      - image: kvaido/comment:2.0
+      - image: aaasm/comment
         name: comment
         env:
         - name: COMMENT_DATABASE_HOST

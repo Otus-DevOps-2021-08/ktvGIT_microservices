@@ -1,8 +1,9 @@
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: post
+  name: post-deployment
   labels:
     app: reddit
     component: post
@@ -20,7 +21,7 @@ spec:
         component: post
     spec:
       containers:
-      - image: kvaido/post:2.0
+      - image: aaasm/post
         name: post
         env:
         - name: POST_DATABASE_HOST
