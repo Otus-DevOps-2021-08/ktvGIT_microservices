@@ -1,3 +1,6 @@
+[control]
+minikube ansible_host=51.250.0.236 ansible_user=yc-user
+
 [masters]
 master ansible_host=51.250.2.64 ansible_user=yc-user
 
