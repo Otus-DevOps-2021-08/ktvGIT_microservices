@@ -20,7 +20,7 @@ spec:
         component: ui
     spec:
       containers:
-      - image: kvaido/ui:2.0
+      - image: lburinov73/ui
         name: ui
         env:
         - name: ENV
