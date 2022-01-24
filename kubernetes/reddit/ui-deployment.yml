@@ -1,6 +1,4 @@
-  labels:
-    app: reddit
-    component: ui
+
 ---
 apiVersion: apps/v1
 kind: Deployment
