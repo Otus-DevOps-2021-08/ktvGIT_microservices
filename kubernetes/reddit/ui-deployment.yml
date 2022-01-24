@@ -20,7 +20,7 @@ spec:
         component: ui
     spec:
       containers:
-      - image: lburinov73/ui
+      - image: ktv2020/ui
         name: ui
         env:
         - name: ENV
