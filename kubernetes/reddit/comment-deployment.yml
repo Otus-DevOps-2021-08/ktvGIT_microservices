@@ -2,12 +2,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: comment-deployment
+  name: comment
   labels:
     app: reddit
     component: comment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: reddit
@@ -20,7 +20,7 @@ spec:
         component: comment
     spec:
       containers:
-      - image: kvaido/comment:2.0
+      - image: litelite/comment:logging
         name: comment
         env:
         - name: COMMENT_DATABASE_HOST

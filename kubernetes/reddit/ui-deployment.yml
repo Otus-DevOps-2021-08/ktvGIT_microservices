@@ -1,5 +1,5 @@
-
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,13 +15,13 @@ spec:
       component: ui
   template:
     metadata:
-      name: ui-pod
+      name: ui
       labels:
         app: reddit
         component: ui
     spec:
       containers:
-      - image: ktv2020/ui
+      - image: aaasm/ui
         name: ui
         env:
         - name: ENV
