@@ -1,3 +1,7 @@
+# labels:
+#  app: reddit
+#  component: ui
+
 ---
 
 apiVersion: apps/v1
