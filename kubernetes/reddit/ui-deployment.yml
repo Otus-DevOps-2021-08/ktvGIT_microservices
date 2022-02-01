@@ -1,4 +1,4 @@
-# /matchLabels:\n\s+app:\sreddit\n\s+component:\sui/
+/matchLabels:\n\s+app:\sreddit\n\s+component:\sui/
 apiVersion: apps/v1
 kind: Deployment
 metadata: # Блок метаданных деплоя
