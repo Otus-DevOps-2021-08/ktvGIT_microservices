@@ -1,31 +1,25 @@
-# labels:
-#  app: reddit
-#  component: ui
-
----
-
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: # Блок метаданных деплоя
   name: ui
   labels:
     app: reddit
     component: ui
-spec:
+spec: # Блок спецификации деплоя
   replicas: 3
   selector:
     matchLabels:
       app: reddit
       component: ui
-  template:
+  template: # Блок описания POD-ов
     metadata:
-      name: ui
+      name: ui-pod
       labels:
         app: reddit
         component: ui
     spec:
       containers:
-      - image: aaasm/ui
+      - image: ktv2020/ui # Не забудьте подставить свой образ
         name: ui
         env:
         - name: ENV
