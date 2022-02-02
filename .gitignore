@@ -25,3 +25,4 @@ inventory.bak2
 .pytest_cache
 src/.env
 docker/.env
+monitoring_src/.env

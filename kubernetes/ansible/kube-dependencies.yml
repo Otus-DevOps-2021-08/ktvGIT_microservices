@@ -23,6 +23,17 @@
       state: present
       filename: 'kubernetes'
 
+  #  - name: add kubelet apt-key
+  #    apt_key:
+  #      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  #      state: present
+
+  #  - name: Add kubelet apt repository and update cache
+  #    apt_repository:
+  #      repo: deb https://download.docker.com/linux/ubuntu xenial stable
+  #      state: present
+  #      update_cache: true
+
    - name: install kubelet
      apt:
        name: kubelet=1.19.0-00
