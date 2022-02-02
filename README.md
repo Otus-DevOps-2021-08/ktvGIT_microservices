@@ -136,3 +136,22 @@ Failed to open TCP connection to post:5000 (getaddrinfo: Temporary failure in na
 Запустить reddit в Kubernetes
 * Развернут Kubernetes-кластер в GKE с помощью Terraform модуля
 -Добавлено для презапуска аввтотеста
+
+## kubernetes-2
+Ingress Controller
+Ingress
+Secret
+TLS
+* Опишите создаваемый объект Secret в виде Kubernetes-манифеста.
+https://kubernetes.io/docs/concepts/configuration/secret/
+https://shocksolution.com/2018/12/14/creating-kubernetes-secrets-using-tls-ssl-as-an-example/
+
+cat tls.crt | base64
+cat tls.key | base64
+kubectl create -f sectet-tls.yml
+
+
+LoadBalancer Service
+Network Policies
+PersistentVolumes
+PersistentVolumeClaims

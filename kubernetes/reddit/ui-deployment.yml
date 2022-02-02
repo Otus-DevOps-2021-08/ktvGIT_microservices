@@ -20,10 +20,11 @@ spec:
         component: ui
     spec:
       containers:
-      - image: chromko/ui
+      - image: kvaido/ui:2.0
         name: ui
         env:
         - name: ENV
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+
