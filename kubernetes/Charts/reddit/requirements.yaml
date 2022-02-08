@@ -1,0 +1,21 @@
+---
+dependencies:
+  - name: ui
+    version: "1.0.0"
+    repository: "file://../ui"
+
+  - name: post
+    version: "1.0.0"
+    repository: "file://../post"
+
+  - name: comment
+    version: "1.0.0"
+    repository: "file://../comment"
+
+#   - name: mongodb
+#     version: "10.21.0"
+#     repository: "https://charts.bitnami.com/bitnami"
+# ...
+  - name: mongodb
+    version: 7.2.10
+    repository: https://charts.helm.sh/stable
